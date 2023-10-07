@@ -3,12 +3,11 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\StoreAdminRequest;
-use App\Http\Requests\UpdateAdminRequest;
-use App\Models\Admin\Admin;
-use Illuminate\Support\Facades\Session;
+use App\Http\Requests\StoreVendorRequest;
+use App\Http\Requests\UpdateVendorRequest;
+use App\Models\Admin\Vendor;
 
-class AdminController extends Controller
+class VendorController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,10 +15,6 @@ class AdminController extends Controller
     public function index()
     {
         //
-
-        Session::put('page', 'dashboard');
-
-        return view('admin.dashboard');
     }
 
     /**
@@ -33,7 +28,7 @@ class AdminController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreAdminRequest $request)
+    public function store(StoreVendorRequest $request)
     {
         //
     }
@@ -41,7 +36,7 @@ class AdminController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Admin $admin)
+    public function show(Vendor $vendor)
     {
         //
     }
@@ -49,7 +44,7 @@ class AdminController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Admin $admin)
+    public function edit(Vendor $vendor)
     {
         //
     }
@@ -57,7 +52,7 @@ class AdminController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateAdminRequest $request, Admin $admin)
+    public function update(UpdateVendorRequest $request, Vendor $vendor)
     {
         //
     }
@@ -65,16 +60,8 @@ class AdminController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Admin $admin)
+    public function destroy(Vendor $vendor)
     {
         //
-    }
-
-    /**
-     * Login function
-     */
-    public function login()
-    {
-        return view('admin.login');
     }
 }

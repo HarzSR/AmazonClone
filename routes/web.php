@@ -33,4 +33,7 @@ require __DIR__.'/auth.php';
 
 // Admin Route
 
-Route::get('/admin/dashboard', [AdminController::class, 'index'])->name('Dashboard');
+Route::prefix('/admin')->group(function() {
+    Route::match(['get','post'], 'login', [AdminController::class, 'login'])->name('Login');
+    Route::get('dashboard', [AdminController::class, 'index'])->name('Dashboard');
+});
