@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreAdminRequest;
 use App\Http\Requests\UpdateAdminRequest;
 use App\Models\Admin\Admin;
+use Illuminate\Support\Facades\Session;
 
 class AdminController extends Controller
 {
@@ -15,6 +16,8 @@ class AdminController extends Controller
     public function index()
     {
         //
+
+        Session::put('page', 'dashboard');
 
         return view('admin.dashboard');
     }
