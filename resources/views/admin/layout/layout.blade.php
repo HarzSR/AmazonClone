@@ -22,8 +22,15 @@
     <!-- Animation Css -->
     <link href="{{ url('admin/plugins/animate-css/animate.css') }}" rel="stylesheet" />
 
-    <!-- Morris Chart Css-->
-    <link href="{{ url('admin/plugins/morrisjs/morris.css') }}" rel="stylesheet" />
+    @if (Session::get('page') == "dashboard")
+        <!-- Morris Chart Css-->
+        <link href="{{ url('admin/plugins/morrisjs/morris.css') }}" rel="stylesheet" />
+    @endif
+
+    @if (Session::get('page') == "passwords")
+        <!-- Sweet Alert Css -->
+        <link href="{{ url('admin/plugins/sweetalert/sweetalert.css') }}" rel="stylesheet" />
+    @endif
 
     <!-- Custom Css -->
     <link href="{{ url('admin/css/style.css') }}" rel="stylesheet" />
@@ -93,32 +100,52 @@
     <!-- Slimscroll Plugin Js -->
     <script src="{{ url('admin/plugins/jquery-slimscroll/jquery.slimscroll.js') }}"></script>
 
+    @if (Session::get('page') == 'passwords')
+        <!-- Jquery Validation Plugin Css -->
+        <script src="{{ url('admin/plugins/jquery-validation/jquery.validate.js') }}"></script>
+
+        <!-- JQuery Steps Plugin Js -->
+        <script src="{{ url('admin/plugins/jquery-steps/jquery.steps.js') }}"></script>
+
+        <!-- Sweet Alert Plugin Js -->
+        <script src="{{ url('admin/plugins/sweetalert/sweetalert.min.js') }}"></script>
+    @endif
+
     <!-- Waves Effect Plugin Js -->
     <script src="{{ url('admin/plugins/node-waves/waves.js') }}"></script>
 
-    <!-- Jquery CountTo Plugin Js -->
-    <script src="{{ url('admin/plugins/jquery-countto/jquery.countTo.js') }}"></script>
+    @if (Session::get('page') == "dashboard")
+        <!-- Jquery CountTo Plugin Js -->
+        <script src="{{ url('admin/plugins/jquery-countto/jquery.countTo.js') }}"></script>
 
-    <!-- Morris Plugin Js -->
-    <script src="{{ url('admin/plugins/raphael/raphael.min.js') }}"></script>
-    <script src="{{ url('admin/plugins/morrisjs/morris.js') }}"></script>
+        <!-- Morris Plugin Js -->
+        <script src="{{ url('admin/plugins/raphael/raphael.min.js') }}"></script>
+        <script src="{{ url('admin/plugins/morrisjs/morris.js') }}"></script>
 
-    <!-- ChartJs -->
-    <script src="plugins/chartjs/Chart.bundle.js"></script>
+        <!-- ChartJs -->
+        <script src="plugins/chartjs/Chart.bundle.js"></script>
 
-    <!-- Flot Charts Plugin Js -->
-    <script src="{{ url('admin/plugins/flot-charts/jquery.flot.js') }}"></script>
-    <script src="{{ url('admin/plugins/flot-charts/jquery.flot.resize.js') }}"></script>
-    <script src="{{ url('admin/plugins/flot-charts/jquery.flot.pie.js') }}"></script>
-    <script src="{{ url('admin/plugins/flot-charts/jquery.flot.categories.js') }}"></script>
-    <script src="{{ url('admin/plugins/flot-charts/jquery.flot.time.js') }}"></script>
+        <!-- Flot Charts Plugin Js -->
+        <script src="{{ url('admin/plugins/flot-charts/jquery.flot.js') }}"></script>
+        <script src="{{ url('admin/plugins/flot-charts/jquery.flot.resize.js') }}"></script>
+        <script src="{{ url('admin/plugins/flot-charts/jquery.flot.pie.js') }}"></script>
+        <script src="{{ url('admin/plugins/flot-charts/jquery.flot.categories.js') }}"></script>
+        <script src="{{ url('admin/plugins/flot-charts/jquery.flot.time.js') }}"></script>
 
-    <!-- Sparkline Chart Plugin Js -->
-    <script src="{{ url('admin/plugins/jquery-sparkline/jquery.sparkline.js') }}"></script>
+        <!-- Sparkline Chart Plugin Js -->
+        <script src="{{ url('admin/plugins/jquery-sparkline/jquery.sparkline.js') }}"></script>
+    @endif
 
     <!-- Custom Js -->
     <script src="{{ url('admin/js/admin.js') }}"></script>
-    <script src="{{ url('admin/js/pages/index.js') }}"></script>
+
+    @if (Session::get('page') == "dashboard")
+        <script src="{{ url('admin/js/pages/index.js') }}"></script>
+    @endif
+
+    @if (Session::get('page') == 'passwords')
+        <script src="{{ url('admin/js/pages/forms/form-validation.js') }}"></script>
+    @endif
 
     <!-- Demo Js -->
     <script src="{{ url('admin/js/demo.js') }}"></script>

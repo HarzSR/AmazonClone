@@ -115,11 +115,28 @@ class AdminController extends Controller
     }
 
     /**
+     * 
+     */
+    public function password(Request $request)
+    {
+        Session::put('page', 'passwords');
+
+        if($request->isMethod('POST'))
+        {
+            $data = $request->all();
+
+            echo "<pre>"; print_r($data);
+            die;
+        }
+
+        return view('admin.settings.admin-password');
+    }
+
+    /**
      * Logout Functionality
      *
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
-
      public function logout()
      {
          Auth::guard('admin')->logout();
