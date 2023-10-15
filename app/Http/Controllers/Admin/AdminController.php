@@ -8,6 +8,7 @@ use App\Http\Requests\UpdateAdminRequest;
 use App\Models\Admin\Admin;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
 
 class AdminController extends Controller
@@ -15,6 +16,7 @@ class AdminController extends Controller
     /**
      * Display a listing of the resource.
      */
+    
     public function index()
     {
         //
@@ -27,6 +29,7 @@ class AdminController extends Controller
     /**
      * Show the form for creating a new resource.
      */
+
     public function create()
     {
         //
@@ -35,6 +38,7 @@ class AdminController extends Controller
     /**
      * Store a newly created resource in storage.
      */
+
     public function store(StoreAdminRequest $request)
     {
         //
@@ -43,6 +47,7 @@ class AdminController extends Controller
     /**
      * Display the specified resource.
      */
+
     public function show(Admin $admin)
     {
         //
@@ -51,6 +56,7 @@ class AdminController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
+
     public function edit(Admin $admin)
     {
         //
@@ -59,6 +65,7 @@ class AdminController extends Controller
     /**
      * Update the specified resource in storage.
      */
+
     public function update(UpdateAdminRequest $request, Admin $admin)
     {
         //
@@ -67,6 +74,7 @@ class AdminController extends Controller
     /**
      * Remove the specified resource from storage.
      */
+
     public function destroy(Admin $admin)
     {
         //
@@ -77,6 +85,7 @@ class AdminController extends Controller
      * 
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\RedirectResponse
      */
+
     public function login(Request $request)
     {
         if($request->isMethod('POST'))
@@ -117,6 +126,7 @@ class AdminController extends Controller
     /**
      * 
      */
+
     public function password(Request $request)
     {
         Session::put('page', 'passwords');
@@ -137,6 +147,7 @@ class AdminController extends Controller
      *
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
+
      public function logout()
      {
          Auth::guard('admin')->logout();
@@ -145,4 +156,25 @@ class AdminController extends Controller
  
          return redirect('/admin/login')->with('success_message', 'Logout Successful');
      }
+
+     /**
+     * Check User Password
+     *
+     * @param Request $request
+     * @return void
+     */
+
+    public function checkCurrentPassword(Request $request)
+    {
+        $data = $request->all();
+
+        if (Hash::check($data['current_password'], Auth::guard('admin')->user()->password))
+        {
+            echo 'True';
+        }
+        else
+        {
+            echo 'False';
+        }
+    }
 }
