@@ -24,7 +24,7 @@
 <div class="menu">
     <ul class="list">
         <li class="header">MAIN NAVIGATION</li>
-        <li @if(Session::get('page') == "dashboard" || Session::get('page') == 'passwords') class="active" @endif>
+        <li @if(Session::get('page') == "dashboard" || Session::get('page') == 'passwords' || Session::get('page') == 'accounts') class="active" @endif>
             <a href="{{ url('admin/dashboard') }}">
                 <i class="material-icons">home</i>
                 <span>Home</span>

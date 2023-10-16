@@ -21,6 +21,7 @@ return new class extends Migration
             $table->string('code');
             $table->string('phone');
             $table->string('email')->unique();
+            $table->text('notes')->nullable();
             $table->tinyInteger('status');
             $table->timestamps();
         });
