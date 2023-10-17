@@ -38,7 +38,7 @@
                 </div>
             </div>
 
-            <form action="{{ url('/admin/admin-details') }}" method="POST" id="updateAdminDetails" name="updateAdminDetails" enctype="multipart/form-data">
+            <form action="{{ url('/admin/account') }}" method="POST" id="updateAdminDetails" name="updateAdminDetails" enctype="multipart/form-data">
                 @csrf
                 <div class="row clearfix">
                     <div class="col-xs-12 col-sm-3">
@@ -81,7 +81,7 @@
                             </div>
                             <div class="body">
                                 <div class="col-md-3">
-                                    <label>Admin Name</label>
+                                    <label>Name</label>
                                     <div class="form-group">
                                         <div>
                                             <input type="text" class="form-control" disabled value="{{ ucwords($userDetails['name']) }}">
@@ -89,7 +89,7 @@
                                     </div>
                                 </div>
                                 <div class="col-md-3">
-                                    <label>Admin Type</label>
+                                    <label>Type</label>
                                     <div class="form-group">
                                         <div>
                                             <input type="text" class="form-control" disabled value="{{ ucwords($userDetails['type']) }}">
@@ -97,7 +97,7 @@
                                     </div>
                                 </div>
                                 <div class="col-md-3">
-                                    <label>Admin Email</label>
+                                    <label>Email</label>
                                     <div class="form-group">
                                         <div >
                                             <input type="text" class="form-control" disabled value="{{ $userDetails['email'] }}">
@@ -105,7 +105,7 @@
                                     </div>
                                 </div>
                                 <div class="col-md-3">
-                                    <label>Admin Number</label>
+                                    <label>Number</label>
                                     <div class="form-group">
                                         <div>
                                             <input type="text" class="form-control" disabled value="{{ ucwords($userDetails['phone']) }}">
