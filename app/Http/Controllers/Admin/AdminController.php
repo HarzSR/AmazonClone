@@ -178,6 +178,47 @@ class AdminController extends Controller
     }
 
     /**
+     * 
+     */
+
+    public function account(Request $request)
+    {
+        Session::put('page', 'accounts');
+
+        if($request->isMethod('POST'))
+        {
+            $data = $request->all();
+
+            echo "<pre>"; print_r($data);
+        }
+
+        $userDetails = Admin::where('email', Auth::guard('admin')->user()->email)->first()->toArray();
+
+        return view('admin.settings.admin-account')->with(compact('userDetails'));
+    }
+
+    /**
+     * Check User Password
+     *
+     * @param Request $request
+     * @return void
+     */
+
+    public function checkCurrentPassword(Request $request)
+    {
+        $data = $request->all();
+ 
+        if (Hash::check($data['current_password'], Auth::guard('admin')->user()->password))
+        {
+            echo 'True';
+        }
+        else
+        {
+            echo 'False';
+        }
+    }
+
+    /**
      * Logout Functionality
      *
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
@@ -192,24 +233,4 @@ class AdminController extends Controller
          return redirect('/admin/login')->with('success_message', 'Logout Successful');
      }
 
-     /**
-     * Check User Password
-     *
-     * @param Request $request
-     * @return void
-     */
-
-    public function checkCurrentPassword(Request $request)
-    {
-        $data = $request->all();
-
-        if (Hash::check($data['current_password'], Auth::guard('admin')->user()->password))
-        {
-            echo 'True';
-        }
-        else
-        {
-            echo 'False';
-        }
-    }
 }
