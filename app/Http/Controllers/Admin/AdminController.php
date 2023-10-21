@@ -9,6 +9,8 @@ use App\Models\Admin\Admin;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\File;
+use Intervention\Image\Facades\Image;
 use Illuminate\Support\Facades\Session;
 
 class AdminController extends Controller
@@ -227,6 +229,13 @@ class AdminController extends Controller
                 {
                     $extension = $image_tmp->getClientOriginalExtension();
                     $imageName = time() . mt_rand() . '.' . $extension;
+
+                    $folderPath = 'admin/images/admin_images/';
+
+                    if (!File::exists($folderPath)) 
+                    {
+                        File::makeDirectory($folderPath);
+                    }
  
                     $imagePath = 'admin/images/admin_images/' . $imageName;
  
@@ -373,6 +382,60 @@ class AdminController extends Controller
         else
         {
             echo 'False';
+        }
+    }
+
+    /**
+     * Delete Admin Notes
+     *
+     * @return \Illuminate\Http\RedirectResponse
+     */
+
+    public function deleteNotes()
+    {
+        $request = app()->make(Request::class);
+
+        if ($request->method() === 'GET')
+        {
+            Admin::where('id', Auth::guard('admin')->user()->id)->update(['notes' => null]);
+ 
+            return redirect()->back()->with('success_message', 'Notes removed successfully');
+        }
+        else
+        {
+            return redirect()->back()->with('error_message', 'Invalid Request, Please try again');
+        }
+    }
+
+    /**
+     * Delete Admin Images
+     *
+     * @return \Illuminate\Http\RedirectResponse
+     */
+
+    public function deleteAdminImage()
+    {
+        $request = app()->make(Request::class);
+
+        if ($request->method() === 'GET')
+        {
+            $imageName = Admin::select('image')->where('id', Auth::guard('admin')->user()->id)->first();
+ 
+            $image_path = 'admin/images/admin_images/' . $imageName->image;
+    
+            // File::delete($large_image_path, $medium_image_path, $small_image_path);
+            if (file_exists($image_path) && !empty($imageName->image))
+            {
+                unlink($image_path);
+            }
+    
+            Admin::where('id', Auth::guard('admin')->user()->id)->update(['image' => '']);
+    
+            return redirect()->back()->with('success_message', 'Image removed successfully');
+        }
+        else
+        {
+            return redirect()->back()->with('error_message', 'Invalid Request, Please try again');
         }
     }
 

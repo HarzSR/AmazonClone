@@ -28,7 +28,7 @@
         <link href="{{ url('admin/plugins/morrisjs/morris.css') }}" rel="stylesheet" />
     @endif
 
-    @if (Session::get('page') == "passwords")
+    @if (Session::get('page') == "passwords" || Session::get('page') == "accounts")
         <!-- Sweet Alert Css -->
         <link href="{{ url('admin/plugins/sweetalert/sweetalert.css') }}" rel="stylesheet" />
     @endif
@@ -101,7 +101,7 @@
     <!-- Slimscroll Plugin Js -->
     <script src="{{ url('admin/plugins/jquery-slimscroll/jquery.slimscroll.js') }}"></script>
 
-    @if (Session::get('page') == 'passwords')
+    @if (Session::get('page') == 'passwords' || Session::get('page') == "accounts")
         <!-- Jquery Validation Plugin Css -->
         <script src="{{ url('admin/plugins/jquery-validation/jquery.validate.js') }}"></script>
 
@@ -151,10 +151,6 @@
 
     @if (Session::get('page') == 'passwords')
         <script src="{{ url('admin/js/pages/forms/form-validation.js') }}"></script>
-    @endif
-
-    @if (Session::get('page') == "accounts")
-        <script src="{{ url('admin/plugins/editable-table/editable-table.js') }}"></script>
     @endif
 
     <!-- Demo Js -->

@@ -40,6 +40,8 @@ Route::prefix('/admin')->group(function() {
         Route::match(['get','post'], 'password', [AdminController::class, 'password'])->name('Update Password');
         Route::match(['get','post'], 'account', [AdminController::class, 'account'])->name('Update Account');
         Route::post('check-current-password', [AdminController::class, 'checkCurrentPassword']);
+        Route::get('delete-notes', [AdminController::class, 'deleteNotes']);
+        Route::get('delete-admin-image', [AdminController::class, 'deleteAdminImage']);
         Route::get('logout', [AdminController::class, 'logout']);
     });
 });
