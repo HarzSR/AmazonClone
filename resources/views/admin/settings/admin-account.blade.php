@@ -54,11 +54,11 @@
                                 </div>
                                 @if(!empty(Auth::guard('admin')->user()->image) && file_exists(public_path('admin/images/admin_images/' . Auth::guard('admin')->user()->image)))
                                     <div class="btn-group-xs align-right">
-                                        <button type="button" id="deleteAdmin" name="deleteAdmin" dataId="admin-image" dataName="Admin Image" class="btn bg-red waves-effect m-r-5 m-t-5">Delete</button>
+                                        <button type="button" id="deleteAdmin" name="deleteAdmin" dataId="admin-image" dataName="admin image" class="btn bg-red waves-effect m-r-5 m-t-5">Delete</button>
                                     </div>
                                 @elseif(!empty(Auth::guard('admin')->user()->image))
                                     <div class="btn-group-xs align-right">
-                                        <button type="button" id="deleteAdmin" name="deleteAdmin" dataId="admin-image" dataName="Admin Image" class="btn bg-red waves-effect m-r-5 m-t-5">Invalid Image for Admin. Suggest click here.</button>
+                                        <button type="button" id="deleteAdmin" name="deleteAdmin" dataId="admin-image" dataName="admin image" class="btn bg-red waves-effect m-r-5 m-t-5">Invalid Image for Admin. Suggest click here.</button>
                                     </div>
                                 @endif
                             </div>
@@ -136,7 +136,7 @@
                                         </div>
                                         @if(!empty(Auth::guard('admin')->user()->notes))
                                             <div class="btn-group-xs align-right">
-                                                <button type="button" id="deleteAdmin" name="deleteAdmin"  dataId="notes" dataName="Notes" class="btn bg-red waves-effect m-t-5">Delete</button>
+                                                <button type="button" id="deleteAdmin" name="deleteAdmin"  dataId="notes" dataName="admin notes" class="btn bg-red waves-effect m-t-5">Delete</button>
                                             </div>
                                         @endif
                                     </div>
