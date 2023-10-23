@@ -22,7 +22,7 @@ return new class extends Migration
             $table->string('phone');
             $table->string('email')->unique();
             $table->text('notes')->nullable();
-            $table->tinyInteger('status');
+            $table->tinyInteger('status')->default(0);
             $table->timestamps();
         });
     }
