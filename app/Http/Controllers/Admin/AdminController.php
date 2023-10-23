@@ -25,7 +25,26 @@ class AdminController extends Controller
 
         Session::put('page', 'dashboard');
 
-        return view('admin.dashboard');
+        if (Auth::guard('admin')->user()->type == "admin")
+        {
+            return view('admin.dashboard');
+        }
+        else if (Auth::guard('admin')->user()->type == "sub-admin")
+        {
+            return redirect('/admin/error/405')->with(['error_message' => 'User Login Successful, but Incorrect Permissions - Logged in as Sub - Admin into Admin', 'additional_message' => "logout"]);
+        }
+        else if  (Auth::guard('admin')->user()->type == "vendor")
+        {
+            return redirect('/admin/error/405')->with(['error_message' => 'User Login Successful, but Incorrect Permissions - Logged in as Vendor into Admin', 'additional_message' => "logout"]);
+        }
+        else
+        {
+            Auth::guard('admin')->logout();
+ 
+            Session::flush();
+
+            return redirect('/admin/error/404')->with('error_message', 'Invalid Request. Logging you Out.');
+        }
     }
 
     /**
@@ -440,18 +459,33 @@ class AdminController extends Controller
     }
 
     /**
+     * Error Pages
+     *
+     * @param $slug
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|void1
+     */
+
+    public function error($slug = null)
+    {
+        if($slug != null)
+        {
+            return view('admin.error.custom-error')->with(compact('slug'));
+        }
+    }
+
+    /**
      * Logout Functionality
      *
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
 
-     public function logout()
-     {
-         Auth::guard('admin')->logout();
+    public function logout()
+    {
+        Auth::guard('admin')->logout();
  
-         Session::flush();
+        Session::flush();
  
-         return redirect('/admin/login')->with('success_message', 'Logout Successful');
-     }
+        return redirect('/admin/login')->with('success_message', 'Logout Successful');
+    }
 
 }

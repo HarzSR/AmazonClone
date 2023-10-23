@@ -42,6 +42,7 @@ Route::prefix('/admin')->group(function() {
         Route::post('check-current-password', [AdminController::class, 'checkCurrentPassword']);
         Route::get('delete-notes', [AdminController::class, 'deleteNotes']);
         Route::get('delete-admin-image', [AdminController::class, 'deleteAdminImage']);
+        Route::get('error/{slug}', [AdminController::class, 'error'])->name('Error');
         Route::get('logout', [AdminController::class, 'logout']);
     });
 });
