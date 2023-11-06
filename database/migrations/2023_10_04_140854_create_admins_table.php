@@ -21,6 +21,7 @@ return new class extends Migration
             $table->string('password');
             $table->string('image');
             $table->text('notes')->nullable();
+            $table->tinyInteger('vendor_update_status')->default(0);
             $table->tinyInteger('status')->default(0);
             $table->timestamps();
         });
