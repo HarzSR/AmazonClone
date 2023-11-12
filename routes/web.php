@@ -41,8 +41,10 @@ Route::prefix('/admin')->group(function() {
         Route::match(['get','post'], 'account', [AdminController::class, 'account'])->name('Update Account');
         Route::match(['get','post'], 'request-account', [AdminController::class, 'requestAccount'])->name('Update Account');
         Route::post('check-current-password', [AdminController::class, 'checkCurrentPassword']);
-        Route::get('delete-notes', [AdminController::class, 'deleteNotes']);
+        Route::get('delete-admin-notes', [AdminController::class, 'deleteAdminNotes']);
         Route::get('delete-admin-image', [AdminController::class, 'deleteAdminImage']);
+        Route::get('delete-vendor-notes', [AdminController::class, 'deleteVendorNotes']);
+        Route::get('delete-vendor-image', [AdminController::class, 'deleteVendorImage']);
         Route::get('error/{slug}', [AdminController::class, 'error'])->name('Error');
         Route::get('logout', [AdminController::class, 'logout']);
     });

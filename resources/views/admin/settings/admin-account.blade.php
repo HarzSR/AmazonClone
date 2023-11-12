@@ -84,7 +84,7 @@
                                     <label>Name</label>
                                     <div class="form-group">
                                         <div>
-                                            <input type="text" class="form-control" disabled value="{{ ucwords($userDetails['name']) }}">
+                                            <input style="pointer-events: none;" type="text" class="form-control" disabled value="{{ ucwords($userDetails['name']) }}">
                                         </div>
                                     </div>
                                 </div>
@@ -92,7 +92,7 @@
                                     <label>Type</label>
                                     <div class="form-group">
                                         <div>
-                                            <input type="text" class="form-control" disabled value="{{ ucwords($userDetails['type']) }}">
+                                            <input style="pointer-events: none;" type="text" class="form-control" disabled value="{{ ucwords($userDetails['type']) }}">
                                         </div>
                                     </div>
                                 </div>
@@ -100,7 +100,7 @@
                                     <label>Email</label>
                                     <div class="form-group">
                                         <div >
-                                            <input type="text" class="form-control" disabled value="{{ $userDetails['email'] }}">
+                                            <input style="pointer-events: none;" type="text" class="form-control" disabled value="{{ $userDetails['email'] }}">
                                         </div>
                                     </div>
                                 </div>
@@ -108,7 +108,7 @@
                                     <label>Number</label>
                                     <div class="form-group">
                                         <div>
-                                            <input type="text" class="form-control" disabled value="{{ ucwords($userDetails['phone']) }}">
+                                            <input style="pointer-events: none;" type="text" class="form-control" disabled value="{{ ucwords($userDetails['phone']) }}">
                                         </div>
                                     </div>
                                 </div>
@@ -136,14 +136,14 @@
                                         </div>
                                         @if(!empty(Auth::guard('admin')->user()->notes))
                                             <div class="btn-group-xs align-right">
-                                                <button type="button" id="deleteAdmin" name="deleteAdmin"  dataId="notes" dataName="admin notes" class="btn bg-red waves-effect m-t-5">Delete</button>
+                                                <button type="button" id="deleteAdmin" name="deleteAdmin"  dataId="admin-notes" dataName="admin notes" class="btn bg-red waves-effect m-t-5">Delete</button>
                                             </div>
                                         @endif
                                     </div>
                                 </div>
                                 <div class="btn-group-lg align-right">
                                     <button class="btn btn-danger waves-effect align-right" id="btn_reset" name="btn_reset" type="reset">RESET</button>
-                                    <button class="btn btn-primary waves-effect align-right" id="btn_update" name="btn_update" type="submit">UPDATE</button>
+                                    <button class="btn btn-primary waves-effect align-right" id="btn_submit" name="btn_submit" type="submit">UPDATE</button>
                                 </div>
                             </div>
                         </div>

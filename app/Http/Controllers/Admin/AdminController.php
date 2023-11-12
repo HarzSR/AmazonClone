@@ -375,7 +375,7 @@ class AdminController extends Controller
                 }
                 else if($image == 1 && $name == 1 && $number == 1 && $note == 1)
                 {
-                    Admin::where('id', Auth::guard('admin')->user()->id)->update(['name' => $data['name'], 'phone' => $data['number'], 'notes' => $data['note']]);
+                    Admin::where('id', Auth::guard('admin')->user()->id)->update(['image' => $imageName, 'name' => $data['name'], 'phone' => $data['number'], 'notes' => $data['note']]);
      
                     return redirect()->back()->with('success_message', 'User details updated');
                 }
@@ -549,7 +549,7 @@ class AdminController extends Controller
                 }
                 else if($image == 1 && $name == 1 && $number == 1 && $note == 1)
                 {
-                    Admin::where('id', Auth::guard('admin')->user()->id)->update(['name' => $data['name'], 'phone' => $data['number'], 'notes' => $data['note']]);
+                    Admin::where('id', Auth::guard('admin')->user()->id)->update(['image' => $imageName, 'name' => $data['name'], 'phone' => $data['number'], 'notes' => $data['note']]);
     
                     return redirect()->back()->with('success_message', 'User details updated');
                 }
@@ -597,7 +597,271 @@ class AdminController extends Controller
         {
             Session::put('page', 'accounts');
 
-            $userDetails = Admin::where('email', Auth::guard('admin')->user()->email)->first()->toArray();
+            // This function will be required if Admin approves the status - to update Vendor (keeping it temporarily here)
+            // if(Auth::guard('admin')->user()->vendor_update_status == 0)
+            // {
+            //     $originalDetails = Admin::where('email', Auth::guard('admin')->user()->email)->first()->toArray();
+            //     $userDetails = Admin::where('email', Auth::guard('admin')->user()->email)->first()->toArray();
+            //     $decodeMessage = Auth::guard('admin')->user()->notes;
+            //     $hasImage = strpos($decodeMessage, "Image:") !== false;
+            //     $hasName = strpos($decodeMessage, "Name:") !== false;
+            //     $hasNumber = strpos($decodeMessage, "Number:") !== false;
+            //     $hasNotes = strpos($decodeMessage, "Notes:") !== false;
+            //     if ($hasImage || $hasName || $hasNumber || $hasNotes)
+            //     {
+            //         $keyValues = explode(", ", $decodeMessage);
+            //         $data = [];
+            //         foreach ($keyValues as $keyValue) {
+            //             list($key, $value) = explode(":", $keyValue);
+            //             $data[$key] = $value;
+            //         }
+            //         if(isset($data['Image']))
+            //         {
+            //             $userDetails['image'] = str_replace(" ", "", $data['Image']);
+            //         }
+            //         if(isset($data['Name']))
+            //         {
+            //             $userDetails['name'] = str_replace(" ", "", $data['Name']);
+            //         }
+            //         if(isset($data['Number']))
+            //         {
+            //             $userDetails['phone'] = str_replace(" ", "", $data['Number']);
+            //         }
+            //         if(isset($data['Notes']))
+            //         {
+            //             $userDetails['notes'] = str_replace(" ", "", $data['Notes']);
+            //         }
+            //         if(!isset($data['Notes']))
+            //         {
+            //             $userDetails['notes'] = '';
+            //         }
+            //     }
+            // }
+            if(Auth::guard('admin')->user()->vendor_update_status == 1)
+            {
+                $originalDetails = Admin::where('email', Auth::guard('admin')->user()->email)->first()->toArray();
+                $userDetails = Admin::where('email', Auth::guard('admin')->user()->email)->first()->toArray();
+                $decodeMessage = Auth::guard('admin')->user()->notes;
+                $hasImage = strpos($decodeMessage, "Image:") !== false;
+                $hasName = strpos($decodeMessage, "Name:") !== false;
+                $hasNumber = strpos($decodeMessage, "Number:") !== false;
+                $hasNotes = strpos($decodeMessage, "Notes:") !== false;
+                if ($hasImage || $hasName || $hasNumber || $hasNotes)
+                {
+                    $keyValues = explode(", ", $decodeMessage);
+                    $data = [];
+                    foreach ($keyValues as $keyValue) {
+                        list($key, $value) = explode(":", $keyValue);
+                        $data[$key] = $value;
+                    }
+                    if(isset($data['Image']))
+                    {
+                        $userDetails['image'] = str_replace(" ", "", $data['Image']);
+                    }
+                    if(isset($data['Name']))
+                    {
+                        $userDetails['name'] = str_replace(" ", "", $data['Name']);
+                    }
+                    if(isset($data['Number']))
+                    {
+                        $userDetails['phone'] = str_replace(" ", "", $data['Number']);
+                    }
+                    if(isset($data['Notes']))
+                    {
+                        $userDetails['notes'] = str_replace(" ", "", $data['Notes']);
+                    }
+                    if(!isset($data['Notes']))
+                    {
+                        $userDetails['notes'] = '';
+                    }
+                }
+            }
+    
+            if($request->isMethod('POST') && Auth::guard('admin')->user()->vendor_update_status == 0)
+            {
+                $data = $request->all();
+    
+                $rules = [
+                    'name' => 'nullable|min:3|regex:/^[-_ a-zA-Z0-9]+$/',
+                    'number' => 'nullable|min:8|regex:/^([0-9\s\-\+\(\)]*)$/',
+                    'adminImage' => 'nullable|mimes:jpeg,jpg,png',
+                    'note' => 'nullable|min:3|max:2048|regex:/^[A-Za-z0-9,:\.\s]+$/'
+                ];
+                $customMessages = [
+                    'name.min' => 'The name is too short.',
+                    'name.regex' => 'The name has unauthorised characters.',
+                    'number.min' => 'The number is too short.',
+                    'number.regex' => 'The number is in invalid format.',
+                    'adminImage.mimes' => 'Invalid image format. Allowed: jpeg, jpg, png.',
+                    'note.min' => 'Note is too short. Please type more.',
+                    'note.max' => 'Note is too large. Please reduce size to 2000 characters.',
+                    'note.regex' => 'The note is in invalid format.',
+                ];
+    
+                $this->validate($request, $rules, $customMessages);
+
+                $constantString = "Image: , Name: , Number: , Notes: , DeleteImage: , DeleteNotes: ";
+
+                $imageData = null;
+                $nameData = null;
+                $numberData = null;
+                $notesData = null;
+    
+                $image = 0;
+                $name = 0;
+                $number = 0;
+                $note = 0;
+    
+                if($request->hasFile('adminImage'))
+                {
+                    $image_tmp = $request->file('adminImage');
+    
+                    if ($image_tmp->isValid())
+                    {
+                        $extension = $image_tmp->getClientOriginalExtension();
+                        $imageName = time() . mt_rand() . '.' . $extension;
+
+                        $folderPath = 'admin/images/admin_images/';
+
+                        if (!File::exists($folderPath)) 
+                        {
+                            File::makeDirectory($folderPath);
+                        }
+    
+                        $imagePath = 'admin/images/admin_images/' . $imageName;
+    
+                        Image::make($image_tmp)->resize(300, 400)->save($imagePath);
+                    }
+    
+                    $image = 1;
+                    $constantString = str_replace("Image: ,", "Image: " . $imageName . ",", $constantString);
+                }
+                else
+                {
+                    $constantString = str_replace("Image: ,", "Image: " . $originalDetails['image'] . ",", $constantString);
+                }
+    
+                if($request->has('name') && $data['name'] != '' && $originalDetails['name'] != $data['name'])
+                {
+                    $name = 1;
+                    $constantString = str_replace("Name: ,", "Name: " . $data['name'] . ",", $constantString);
+                }
+    
+                if($request->has('number') && $data['number'] != '' && $originalDetails['phone'] != $data['number'])
+                {
+                    $number = 1;
+                    $constantString = str_replace("Number: ,", "Number: " . $data['number'] . ",", $constantString);
+                }
+    
+                if($request->has('note') && $data['note'] != '' && $originalDetails['notes'] != $data['note'])
+                {
+                    $note = 1;
+                    $constantString = str_replace("Notes: ,", "Notes: " . $data['note'] . ",", $constantString);
+                }
+    
+                if($image == 0 && $name == 0 && $number == 0 && $note == 0)
+                {
+                    return redirect()->back()->with('neutral_message', 'No updates were Requested.');
+                }
+                else if($image == 0 && $name == 0 && $number == 0 && $note == 1)
+                {
+                    Admin::where('id', Auth::guard('admin')->user()->id)->update(['notes' => $constantString, 'vendor_update_status' => '1']);
+    
+                    return redirect()->back()->with('success_message', 'User notes updated Requested');
+                }
+                else if($image == 0 && $name == 0 && $number == 1 && $note == 0)
+                {
+                    Admin::where('id', Auth::guard('admin')->user()->id)->update(['notes' => $constantString, 'vendor_update_status' => '1']);
+    
+                    return redirect()->back()->with('success_message', 'User number updated Requested');
+                }
+                else if($image == 0 && $name == 0 && $number == 1 && $note == 1)
+                {
+                    Admin::where('id', Auth::guard('admin')->user()->id)->update(['notes' => $constantString, 'vendor_update_status' => '1']);
+    
+                    return redirect()->back()->with('success_message', 'User number & notes updated Requested');
+                }
+                else if($image == 0 && $name == 1 && $number == 0 && $note == 0)
+                {
+                    Admin::where('id', Auth::guard('admin')->user()->id)->update(['notes' => $constantString, 'vendor_update_status' => '1']);
+    
+                    return redirect()->back()->with('success_message', 'User name updated Requested');
+                }
+                else if($image == 0 && $name == 1 && $number == 0 && $note == 1)
+                {
+                    Admin::where('id', Auth::guard('admin')->user()->id)->update(['notes' => $constantString, 'vendor_update_status' => '1']);
+    
+                    return redirect()->back()->with('success_message', 'User name & notes updated Requested');
+                }
+                else if($image == 0 && $name == 1 && $number == 1 && $note == 0)
+                {
+                    Admin::where('id', Auth::guard('admin')->user()->id)->update(['notes' => $constantString, 'vendor_update_status' => '1']);
+    
+                    return redirect()->back()->with('success_message', 'User name & number updated Requested');
+                }
+                else if($image == 0 && $name == 1 && $number == 1 && $note == 1)
+                {
+                    Admin::where('id', Auth::guard('admin')->user()->id)->update(['notes' => $constantString, 'vendor_update_status' => '1']);
+    
+                    return redirect()->back()->with('success_message', 'User name, number & notes updated Requested');
+                }
+                else if($image == 1 && $name == 0 && $number == 0 && $note == 0)
+                {
+                    Admin::where('id', Auth::guard('admin')->user()->id)->update(['notes' => $constantString, 'vendor_update_status' => '1']);
+    
+                    return redirect()->back()->with('success_message', 'User image was updated Requested');
+                }
+                else if($image == 1 && $name == 0 && $number == 0 && $note == 1)
+                {
+                    Admin::where('id', Auth::guard('admin')->user()->id)->update(['notes' => $constantString, 'vendor_update_status' => '1']);
+    
+                    return redirect()->back()->with('success_message', 'User image & notes updated Requested');
+                }
+                else if($image == 1 && $name == 0 && $number == 1 && $note == 0)
+                {
+                    Admin::where('id', Auth::guard('admin')->user()->id)->update(['notes' => $constantString, 'vendor_update_status' => '1']);
+    
+                    return redirect()->back()->with('success_message', 'User image & number updated Requested');
+                }
+                else if($image == 1 && $name == 0 && $number == 1 && $note == 1)
+                {
+                    Admin::where('id', Auth::guard('admin')->user()->id)->update(['notes' => $constantString, 'vendor_update_status' => '1']);
+    
+                    return redirect()->back()->with('success_message', 'User image, number & notes updated Requested');
+                }
+                else if($image == 1 && $name == 1 && $number == 0 && $note == 0)
+                {
+                    Admin::where('id', Auth::guard('admin')->user()->id)->update(['notes' => $constantString, 'vendor_update_status' => '1']);
+    
+                    return redirect()->back()->with('success_message', 'User image & name updated Requested');
+                }
+                else if($image == 1 && $name == 1 && $number == 0 && $note == 1)
+                {
+                    Admin::where('id', Auth::guard('admin')->user()->id)->update(['notes' => $constantString, 'vendor_update_status' => '1']);
+    
+                    return redirect()->back()->with('success_message', 'User image, name & notes updated Requested');
+                }
+                else if($image == 1 && $name == 1 && $number == 1 && $note == 0)
+                {
+                    Admin::where('id', Auth::guard('admin')->user()->id)->update(['notes' => $constantString, 'vendor_update_status' => '1']);
+    
+                    return redirect()->back()->with('success_message', 'User name, number & number updated Requested');
+                }
+                else if($image == 1 && $name == 1 && $number == 1 && $note == 1)
+                {
+                    Admin::where('id', Auth::guard('admin')->user()->id)->update(['notes' => $constantString, 'vendor_update_status' => '1']);
+    
+                    return redirect()->back()->with('success_message', 'User details updated Requested');
+                }
+                else
+                {
+                    return redirect()->back()->with('error_message', 'Invalid data, please try again')->withInput($request->input());
+                }
+            }
+            elseif($request->isMethod('POST') && Auth::guard('admin')->user()->vendor_update_status == 1)
+            {
+                return redirect('/admin/error/501')->with('error_message', 'Invalid Request. You can not make this request.');
+            }
         }
         else
         {
@@ -636,7 +900,7 @@ class AdminController extends Controller
      * @return \Illuminate\Http\RedirectResponse
      */
 
-    public function deleteNotes()
+    public function deleteAdminNotes()
     {
 
         if (Auth::guard('admin')->user()->type == "admin")

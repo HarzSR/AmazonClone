@@ -107,12 +107,12 @@ $(document).ready(function() {
 });
 
 $(function() {
-    $('#deleteAdmin').on('click', function() {
+    $('#deleteVendor').on('click', function() {
         var deleteName = $(this).attr('dataName');
         var deleteId = $(this).attr('dataId');
         swal({
             title: 'Requesting Confirmation',
-            text: 'Do you want to delete ' + deleteName + ".",
+            text: 'Do you want to delete ' + deleteName + '. This will be reviewd and an Admin has to confirm this update, until that the update will be pending.',
             icon: 'question',
             showCancelButton: true,
             confirmButtonColor: '#3085D6',
@@ -121,6 +121,44 @@ $(function() {
             focusCancel: true,
         }, function() {
             window.location.href = "/admin/delete-" + deleteId;
+        });
+    });
+});
+
+$(function() {
+    $('#deleteAdmin').on('click', function() {
+        var deleteName = $(this).attr('dataName');
+        var deleteId = $(this).attr('dataId');
+        swal({
+            title: 'Requesting Confirmation',
+            text: 'Do you want to delete ' + deleteName + '.',
+            icon: 'question',
+            showCancelButton: true,
+            confirmButtonColor: '#3085D6',
+            cancelButtonColor: '#D33',
+            confirmButtonText: 'Yes, Delete it',
+            focusCancel: true,
+        }, function() {
+            window.location.href = "/admin/delete-" + deleteId;
+        });
+    });
+});
+
+$(function() {
+    $('#btn_update').on('click', function(e) {
+        e.preventDefault();
+        var form = $(this).parents('form');
+        swal({
+            title: 'Requesting Confirmation',
+            text: 'Do you want to request this updates. This will be reviewd and an Admin has to confirm this update, until that the update will be pending.',
+            icon: 'question',
+            showCancelButton: true,
+            confirmButtonColor: '#3085D6',
+            cancelButtonColor: '#D33',
+            confirmButtonText: 'Yes, Update it',
+            focusCancel: true,
+        }, function(isConfirm){
+            if (isConfirm) form.submit();
         });
     });
 });
