@@ -39,6 +39,7 @@ Route::prefix('/admin')->group(function() {
         Route::get('dashboard', [AdminController::class, 'index'])->name('Dashboard');
         Route::match(['get','post'], 'password', [AdminController::class, 'password'])->name('Update Password');
         Route::match(['get','post'], 'account', [AdminController::class, 'account'])->name('Update Account');
+        Route::match(['get','post'], 'approve', [AdminController::class, 'approve'])->name('Approve Vendor');
         Route::match(['get','post'], 'request-account', [AdminController::class, 'requestAccount'])->name('Update Account');
         Route::post('check-current-password', [AdminController::class, 'checkCurrentPassword']);
         Route::get('delete-admin-notes', [AdminController::class, 'deleteAdminNotes']);

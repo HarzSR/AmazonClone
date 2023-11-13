@@ -559,7 +559,7 @@ class AdminController extends Controller
                 }
             }
         }
-        else if  (Auth::guard('admin')->user()->type == "vendor")
+        else if (Auth::guard('admin')->user()->type == "vendor")
         {
             return redirect('/admin/error/404')->with('error_message', 'Invalid Request. You do not have access to this page.');
         }
@@ -593,7 +593,7 @@ class AdminController extends Controller
         {
             return redirect('/admin/error/404')->with('error_message', 'Invalid Request. You do not have access to this page.');
         }
-        else if  (Auth::guard('admin')->user()->type == "vendor")
+        else if (Auth::guard('admin')->user()->type == "vendor")
         {
             Session::put('page', 'accounts');
 
@@ -874,6 +874,26 @@ class AdminController extends Controller
     }
 
     /**
+     * Approve Vendor Details
+     *
+     * @param Request $request
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\RedirectResponse
+     * @throws \Illuminate\Validation\ValidationException
+     */
+
+    public function approve(Request $request)
+    {
+        if (Auth::guard('admin')->user()->type == "admin")
+        {
+            Session::put('page', 'accounts');
+ 
+            $userDetails = Admin::where('email', Auth::guard('admin')->user()->email)->first()->toArray();
+        }
+
+        return view('admin.settings.admin-vendor')->with(compact('userDetails'));
+    }
+
+    /**
      * Check User Password
      *
      * @param Request $request
@@ -895,47 +915,24 @@ class AdminController extends Controller
     }
 
     /**
-     * Delete Admin Notes
+     * Delete Vendor Notes
      *
      * @return \Illuminate\Http\RedirectResponse
      */
 
-    public function deleteAdminNotes()
+    public function deleteVendorNotes()
     {
-
         if (Auth::guard('admin')->user()->type == "admin")
         {
-            $request = app()->make(Request::class);
-
-            if ($request->method() === 'GET')
-            {
-                Admin::where('id', Auth::guard('admin')->user()->id)->update(['notes' => null]);
-    
-                return redirect()->back()->with('success_message', 'Notes removed successfully');
-            }
-            else
-            {
-                return redirect()->back()->with('error_message', 'Invalid Request, Please try again');
-            }
+            return redirect('/admin/error/404')->with('error_message', 'Invalid Request. You do not have access to this page.');
         }
         else if (Auth::guard('admin')->user()->type == "sub-admin")
         {
-            $request = app()->make(Request::class);
-
-            if ($request->method() === 'GET')
-            {
-                Admin::where('id', Auth::guard('admin')->user()->id)->update(['notes' => null]);
-    
-                return redirect()->back()->with('success_message', 'Notes removed successfully');
-            }
-            else
-            {
-                return redirect()->back()->with('error_message', 'Invalid Request, Please try again');
-            }
-        }
-        else if  (Auth::guard('admin')->user()->type == "vendor")
-        {
             return redirect('/admin/error/404')->with('error_message', 'Invalid Request. You do not have access to this page.');
+        }
+        else if (Auth::guard('admin')->user()->type == "vendor" && Auth::guard('admin')->user()->vendor_update_status == 1)
+        {
+            // Update Vendor Notes Delete Post Approval
         }
         else
         {
@@ -948,33 +945,52 @@ class AdminController extends Controller
     }
 
     /**
-     * Delete Admin Images
+     * Delete Vendor Images
      *
      * @return \Illuminate\Http\RedirectResponse
      */
 
-    public function deleteAdminImage()
+    public function deleteVendorImage()
     {
+        if (Auth::guard('admin')->user()->type == "admin")
+        {
+            return redirect('/admin/error/404')->with('error_message', 'Invalid Request. You do not have access to this page.');
+        }
+        else if (Auth::guard('admin')->user()->type == "sub-admin")
+        {
+            return redirect('/admin/error/404')->with('error_message', 'Invalid Request. You do not have access to this page.');
+        }
+        else if (Auth::guard('admin')->user()->type == "vendor"  && Auth::guard('admin')->user()->vendor_update_status == 1)
+        {
+            // Update Vendor Image Delete Post Approval
+        }
+        else
+        {
+            Auth::guard('admin')->logout();
+ 
+            Session::flush();
 
+            return redirect('/admin/error/404')->with('error_message', 'Invalid Request. Logging you Out.');
+        }
+    }
+
+    /**
+     * Delete Admin Notes
+     *
+     * @return \Illuminate\Http\RedirectResponse
+     */
+
+    public function deleteAdminNotes()
+    {
         if (Auth::guard('admin')->user()->type == "admin")
         {
             $request = app()->make(Request::class);
 
             if ($request->method() === 'GET')
             {
-                $imageName = Admin::select('image')->where('id', Auth::guard('admin')->user()->id)->first();
+                Admin::where('id', Auth::guard('admin')->user()->id)->update(['notes' => null]);
     
-                $image_path = 'admin/images/admin_images/' . $imageName->image;
-        
-                // File::delete($large_image_path, $medium_image_path, $small_image_path);
-                if (file_exists($image_path) && !empty($imageName->image))
-                {
-                    unlink($image_path);
-                }
-        
-                Admin::where('id', Auth::guard('admin')->user()->id)->update(['image' => '']);
-        
-                return redirect()->back()->with('success_message', 'Image removed successfully');
+                return redirect()->back()->with('success_message', 'Notes removed successfully');
             }
             else
             {
@@ -987,26 +1003,16 @@ class AdminController extends Controller
 
             if ($request->method() === 'GET')
             {
-                $imageName = Admin::select('image')->where('id', Auth::guard('admin')->user()->id)->first();
+                Admin::where('id', Auth::guard('admin')->user()->id)->update(['notes' => null]);
     
-                $image_path = 'admin/images/admin_images/' . $imageName->image;
-        
-                // File::delete($large_image_path, $medium_image_path, $small_image_path);
-                if (file_exists($image_path) && !empty($imageName->image))
-                {
-                    unlink($image_path);
-                }
-        
-                Admin::where('id', Auth::guard('admin')->user()->id)->update(['image' => '']);
-        
-                return redirect()->back()->with('success_message', 'Image removed successfully');
+                return redirect()->back()->with('success_message', 'Notes removed successfully');
             }
             else
             {
                 return redirect()->back()->with('error_message', 'Invalid Request, Please try again');
             }
         }
-        else if  (Auth::guard('admin')->user()->type == "vendor")
+        else if (Auth::guard('admin')->user()->type == "vendor")
         {
             return redirect('/admin/error/404')->with('error_message', 'Invalid Request. You do not have access to this page.');
         }
@@ -1016,6 +1022,78 @@ class AdminController extends Controller
  
             Session::flush();
 
+            return redirect('/admin/error/404')->with('error_message', 'Invalid Request. Logging you Out.');
+        }
+    }
+ 
+     /**
+      * Delete Admin Images
+      *
+      * @return \Illuminate\Http\RedirectResponse
+      */
+ 
+    public function deleteAdminImage()
+    {
+        if (Auth::guard('admin')->user()->type == "admin")
+        {
+            $request = app()->make(Request::class);
+ 
+            if ($request->method() === 'GET')
+            {
+                $imageName = Admin::select('image')->where('id', Auth::guard('admin')->user()->id)->first();
+     
+                $image_path = 'admin/images/admin_images/' . $imageName->image;
+         
+                // File::delete($large_image_path, $medium_image_path, $small_image_path);
+                if (file_exists($image_path) && !empty($imageName->image))
+                {
+                    unlink($image_path);
+                }
+         
+                Admin::where('id', Auth::guard('admin')->user()->id)->update(['image' => '']);
+         
+                return redirect()->back()->with('success_message', 'Image removed successfully');
+            }
+            else
+            {
+                return redirect()->back()->with('error_message', 'Invalid Request, Please try again');
+            }
+        }
+        else if (Auth::guard('admin')->user()->type == "sub-admin")
+        {
+            $request = app()->make(Request::class);
+ 
+            if ($request->method() === 'GET')
+            {
+                $imageName = Admin::select('image')->where('id', Auth::guard('admin')->user()->id)->first();
+     
+                $image_path = 'admin/images/admin_images/' . $imageName->image;
+         
+                // File::delete($large_image_path, $medium_image_path, $small_image_path);
+                if (file_exists($image_path) && !empty($imageName->image))
+                {
+                    unlink($image_path);
+                }
+         
+                Admin::where('id', Auth::guard('admin')->user()->id)->update(['image' => '']);
+         
+                return redirect()->back()->with('success_message', 'Image removed successfully');
+            }
+            else
+            {
+                return redirect()->back()->with('error_message', 'Invalid Request, Please try again');
+            }
+        }
+        else if (Auth::guard('admin')->user()->type == "vendor")
+        {
+            return redirect('/admin/error/404')->with('error_message', 'Invalid Request. You do not have access to this page.');
+        }
+        else
+        {
+            Auth::guard('admin')->logout();
+  
+            Session::flush();
+ 
             return redirect('/admin/error/404')->with('error_message', 'Invalid Request. Logging you Out.');
         }
     }

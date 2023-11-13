@@ -14,8 +14,9 @@
                 <li><a href="{{ url('admin/password') }}"><i class="material-icons">password</i>Password Update</a></li>
                 @if(Auth::guard('admin')->user()->type == 'admin' || Auth::guard('admin')->user()->type == 'sub-admin')
                     <li><a href="{{ url('admin/account') }}"><i class="material-icons">settings</i>Account Settings</a></li>
+                    <li><a href="{{ url('admin/approve') }}"><i class="material-icons">check_circle</i>Approve Vendors</a></li>
                 @else
-                <li><a href="{{ url('admin/request-account') }}"><i class="material-icons">settings</i>Request Update</a></li>
+                    <li><a href="{{ url('admin/request-account') }}"><i class="material-icons">settings</i>Request Update</a></li>
                 @endif
                 <li role="separator" class="divider"></li>
                 <li><a href="{{ url('admin/logout') }}"><i class="material-icons">input</i>Sign Out</a></li>
