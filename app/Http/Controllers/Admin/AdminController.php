@@ -887,7 +887,7 @@ class AdminController extends Controller
         {
             Session::put('page', 'accounts');
  
-            $userDetails = Admin::where('email', Auth::guard('admin')->user()->email)->first()->toArray();
+            $userDetails = Admin::where('type', 'vendor')->get();
         }
 
         return view('admin.settings.admin-vendor')->with(compact('userDetails'));
