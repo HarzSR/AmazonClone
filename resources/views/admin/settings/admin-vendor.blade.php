@@ -60,12 +60,14 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr>
-                                            <th scope="row">1</th>
-                                            <td>{{ ucwords($userDetails['name']) }}</td>
-                                            <td>{{ ucwords($userDetails['status']) }}</td>
-                                            <td></td>
-                                        </tr>
+                                        @foreach ($userDetails as $user)
+                                            <tr>
+                                                <th scope="row">{{ $loop->iteration }}</th>
+                                                <td>{{ ucwords($user['name']) }}</td>
+                                                <td>{{ ucwords($user['status']) }}</td>
+                                                <td></td>
+                                            </tr>
+                                            @endforeach
                                     </tbody>
                                 </table>
                             </div>
