@@ -53,19 +53,31 @@
                                 <table class="table">
                                     <thead>
                                         <tr>
-                                            <th>#</th>
-                                            <th>VENDOR</th>
-                                            <th>STATUS</th>
-                                            <th>ACTION</th>
+                                            <th style="text-align: center;">#</th>
+                                            <th style="text-align: center;">VENDOR</th>
+                                            <th style="text-align: center;">STATUS</th>
+                                            <th style="text-align: center;">ACTION</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         @foreach ($userDetails as $user)
                                             <tr>
-                                                <th scope="row">{{ $loop->iteration }}</th>
-                                                <td>{{ ucwords($user['name']) }}</td>
-                                                <td>{{ ucwords($user['status']) }}</td>
-                                                <td></td>
+                                                <th scope="row" style="text-align: center;">{{ $loop->iteration }}</th>
+                                                <td style="text-align: center;">{{ ucwords($user['name']) }}</td>
+                                                <td style="text-align: center;">
+                                                    @if($user['status'] == 1)
+                                                    <button type="button" class="btn btn-success waves-effect" style="width: 100px; pointer-events: none;">Active</button>
+                                                    @elseif ($user['status'] == 0)
+                                                    <button type="button" class="btn btn-danger waves-effect" style="width: 100px; pointer-events: none;">Deactivated</button>
+                                                    @endif
+                                                </td>
+                                                <td style="text-align: center;">
+                                                    @if($user['vendor_update_status'] == 1)
+                                                    <button type="button" class="btn btn-primary waves-effect" style="width: 100px;">Update</button>
+                                                    @elseif ($user['vendor_update_status'] == 0)
+                                                    <button type="button" class="btn btn-default waves-effect" style="width: 100px;">No Updates</button>
+                                                    @endif
+                                                </td>
                                             </tr>
                                             @endforeach
                                     </tbody>
