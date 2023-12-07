@@ -118,6 +118,8 @@
     @if (Session::get('page') == "accounts")
         <!-- Editable Table Plugin Js -->
         <script src="{{ url('admin/plugins/editable-table/mindmup-editabletable.js') }}"></script>
+        <!-- Bootstrap Notify Plugin Js -->
+        <script src="{{ url('admin/plugins/bootstrap-notify/bootstrap-notify.js') }}"></script>
     @endif
 
     @if (Session::get('page') == "dashboard")
@@ -151,6 +153,10 @@
 
     @if (Session::get('page') == 'passwords')
         <script src="{{ url('admin/js/pages/forms/form-validation.js') }}"></script>
+    @endif
+
+    @if (Session::get('page') == 'accounts')
+        <script src="{{ url('admin/js/pages/ui/modals.js') }}"></script>
     @endif
 
     <!-- Demo Js -->
