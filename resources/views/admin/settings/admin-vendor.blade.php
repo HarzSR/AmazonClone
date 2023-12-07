@@ -73,12 +73,28 @@
                                                 </td>
                                                 <td style="text-align: center;">
                                                     @if($user['vendor_update_status'] == 1)
-                                                    <button type="button" class="btn btn-primary waves-effect" style="width: 100px;">Update</button>
+                                                    <button type="button" class="btn btn-primary waves-effect" data-toggle="modal" data-target="#{{ $loop->iteration }}" style="width: 100px;">Update</button>
                                                     @elseif ($user['vendor_update_status'] == 0)
                                                     <button type="button" class="btn btn-default waves-effect" style="width: 100px;">No Updates</button>
                                                     @endif
                                                 </td>
                                             </tr>
+                                            <div class="modal fade" id="{{ $loop->iteration }}" tabindex="-1" role="dialog">
+                                                <div class="modal-dialog modal-lg" role="document">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h4 class="modal-title" id="{{ $loop->iteration }}">{{ ucwords($user['name']) }}</h4>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            <p>Update Details</p>
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-success waves-effect">Approve</button>
+                                                            <button type="button" class="btn btn-danger waves-effect" data-dismiss="modal">Deny</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
                                             @endforeach
                                     </tbody>
                                 </table>
