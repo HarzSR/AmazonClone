@@ -66,16 +66,16 @@
                                                 <td style="text-align: center;">{{ ucwords($user['name']) }}</td>
                                                 <td style="text-align: center;">
                                                     @if($user['status'] == 1)
-                                                    <button type="button" class="btn btn-success waves-effect" style="width: 100px; pointer-events: none;">Active</button>
+                                                        <button type="button" class="btn btn-success waves-effect" style="width: 100px; pointer-events: none;">Active</button>
                                                     @elseif ($user['status'] == 0)
-                                                    <button type="button" class="btn btn-danger waves-effect" style="width: 100px; pointer-events: none;">Deactivated</button>
+                                                        <button type="button" class="btn btn-danger waves-effect" style="width: 100px; pointer-events: none;">Deactivated</button>
                                                     @endif
                                                 </td>
                                                 <td style="text-align: center;">
                                                     @if($user['vendor_update_status'] == 1)
-                                                    <button type="button" class="btn btn-primary waves-effect" data-toggle="modal" data-target="#{{ $loop->iteration }}" style="width: 100px;">Update</button>
+                                                        <button type="button" class="btn btn-primary waves-effect" data-toggle="modal" data-target="#{{ $loop->iteration }}" style="width: 100px; @if($user['status'] == 0) pointer-events: none @endif">@if($user['status'] == 0) Can't @endif Update</button>
                                                     @elseif ($user['vendor_update_status'] == 0)
-                                                    <button type="button" class="btn btn-default waves-effect" style="width: 100px;">No Updates</button>
+                                                        <button type="button" class="btn btn-default waves-effect" style="width: 100px; pointer-events: none;">No Updates</button>
                                                     @endif
                                                 </td>
                                             </tr>
@@ -86,7 +86,18 @@
                                                             <h4 class="modal-title" id="{{ $loop->iteration }}">{{ ucwords($user['name']) }}</h4>
                                                         </div>
                                                         <div class="modal-body">
-                                                            <p>Update Details</p>
+                                                            <div class="table-responsive">
+                                                                <div class="row">
+                                                                    <div class="col">Column Heading 1</div>
+                                                                    <div class="col">Column Heading 2</div>
+                                                                    <!-- Add more column headings as needed -->
+                                                                </div>
+                                                                <div class="row">
+                                                                    <div class="col">1</div>
+                                                                    <div class="col">2</div>
+                                                                    <!-- Add more data values as needed -->
+                                                                </div>
+                                                            </div>
                                                         </div>
                                                         <div class="modal-footer">
                                                             <button type="button" class="btn btn-success waves-effect">Approve</button>
