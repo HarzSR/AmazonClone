@@ -66,7 +66,9 @@
         <div class="search-icon">
             <i class="material-icons">search</i>
         </div>
-        <input type="text" placeholder="Search for anything ...">
+        <form action="#">
+            <input id="search" name="search" type="text" placeholder="Search for anything ...">
+        </form>
         <div class="close-search">
             <i class="material-icons">close</i>
         </div>
