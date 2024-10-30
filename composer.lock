@@ -1270,16 +1270,16 @@
         },
         {
             "name": "laravel/framework",
-            "version": "v11.29.0",
+            "version": "v11.30.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/framework.git",
-                "reference": "425054512c362835ba9c0307561973c8eeac7385"
+                "reference": "dff716442d9c229d716be82ccc9a7de52eb97193"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/framework/zipball/425054512c362835ba9c0307561973c8eeac7385",
-                "reference": "425054512c362835ba9c0307561973c8eeac7385",
+                "url": "https://api.github.com/repos/laravel/framework/zipball/dff716442d9c229d716be82ccc9a7de52eb97193",
+                "reference": "dff716442d9c229d716be82ccc9a7de52eb97193",
                 "shasum": ""
             },
             "require": {
@@ -1475,7 +1475,7 @@
                 "issues": "https://github.com/laravel/framework/issues",
                 "source": "https://github.com/laravel/framework"
             },
-            "time": "2024-10-22T14:13:31+00:00"
+            "time": "2024-10-30T15:00:34+00:00"
         },
         {
             "name": "laravel/passport",
@@ -6674,16 +6674,16 @@
     "packages-dev": [
         {
             "name": "barryvdh/laravel-ide-helper",
-            "version": "v3.2.0",
+            "version": "v3.2.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/barryvdh/laravel-ide-helper.git",
-                "reference": "7956ccb4943f8532d008c17a1094b34bb6394d56"
+                "reference": "07e3bd8796f3d1414801a03d3783f9d3ec9efc08"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/barryvdh/laravel-ide-helper/zipball/7956ccb4943f8532d008c17a1094b34bb6394d56",
-                "reference": "7956ccb4943f8532d008c17a1094b34bb6394d56",
+                "url": "https://api.github.com/repos/barryvdh/laravel-ide-helper/zipball/07e3bd8796f3d1414801a03d3783f9d3ec9efc08",
+                "reference": "07e3bd8796f3d1414801a03d3783f9d3ec9efc08",
                 "shasum": ""
             },
             "require": {
@@ -6752,7 +6752,7 @@
             ],
             "support": {
                 "issues": "https://github.com/barryvdh/laravel-ide-helper/issues",
-                "source": "https://github.com/barryvdh/laravel-ide-helper/tree/v3.2.0"
+                "source": "https://github.com/barryvdh/laravel-ide-helper/tree/v3.2.2"
             },
             "funding": [
                 {
@@ -6764,7 +6764,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2024-10-17T16:43:13+00:00"
+            "time": "2024-10-29T14:00:16+00:00"
         },
         {
             "name": "barryvdh/reflection-docblock",
@@ -7199,16 +7199,16 @@
         },
         {
             "name": "laravel/sail",
-            "version": "v1.37.0",
+            "version": "v1.37.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/sail.git",
-                "reference": "5d385f2e698f0f774cdead82aff5d989fb95309b"
+                "reference": "7efa151ea0d16f48233d6a6cd69f81270acc6e93"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/sail/zipball/5d385f2e698f0f774cdead82aff5d989fb95309b",
-                "reference": "5d385f2e698f0f774cdead82aff5d989fb95309b",
+                "url": "https://api.github.com/repos/laravel/sail/zipball/7efa151ea0d16f48233d6a6cd69f81270acc6e93",
+                "reference": "7efa151ea0d16f48233d6a6cd69f81270acc6e93",
                 "shasum": ""
             },
             "require": {
@@ -7258,7 +7258,7 @@
                 "issues": "https://github.com/laravel/sail/issues",
                 "source": "https://github.com/laravel/sail"
             },
-            "time": "2024-10-21T17:13:38+00:00"
+            "time": "2024-10-29T20:18:14+00:00"
         },
         {
             "name": "mockery/mockery",
@@ -8002,16 +8002,16 @@
         },
         {
             "name": "phpunit/phpunit",
-            "version": "10.5.37",
+            "version": "10.5.38",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "c7cffa0efa2b70c22366523e6d804c9419eb2400"
+                "reference": "a86773b9e887a67bc53efa9da9ad6e3f2498c132"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/c7cffa0efa2b70c22366523e6d804c9419eb2400",
-                "reference": "c7cffa0efa2b70c22366523e6d804c9419eb2400",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/a86773b9e887a67bc53efa9da9ad6e3f2498c132",
+                "reference": "a86773b9e887a67bc53efa9da9ad6e3f2498c132",
                 "shasum": ""
             },
             "require": {
@@ -8083,7 +8083,7 @@
             "support": {
                 "issues": "https://github.com/sebastianbergmann/phpunit/issues",
                 "security": "https://github.com/sebastianbergmann/phpunit/security/policy",
-                "source": "https://github.com/sebastianbergmann/phpunit/tree/10.5.37"
+                "source": "https://github.com/sebastianbergmann/phpunit/tree/10.5.38"
             },
             "funding": [
                 {
@@ -8099,7 +8099,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2024-10-19T13:03:41+00:00"
+            "time": "2024-10-28T13:06:21+00:00"
         },
         {
             "name": "sebastian/cli-parser",
